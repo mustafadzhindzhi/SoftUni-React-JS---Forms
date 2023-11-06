@@ -10,13 +10,29 @@ const formInitialState = {
   running: false,
 };
 
-export default function ControlledForm() {
+export default function ControlledForm({
+  formRef,
+}) {
   const [formValues, setFormValues] = useState(formInitialState);
 
   const changeHandler = (e) => {
+    let value = "";
+
+    switch (e.target.type) {
+      case "number":
+        value = Number(e.target.value);
+        break;
+      case "checkbox":
+        value = e.target.checked;
+        break;
+      default:
+        value = e.target.value;
+        break;
+    }
+
     setFormValues((state) => ({
       ...state,
-      [e.target.name]: e.target.value,
+      [e.target.name]: value,
     }));
   };
 
@@ -24,24 +40,18 @@ export default function ControlledForm() {
     setFormValues(formInitialState);
   };
 
-  const submitHandler = () => {
+  const submitHandler = (e) => {
+    e.preventDefault();
     console.log(formValues);
 
     resetFormHandler();
-  };
-
-  const onCheckboChange = (e) => {
-    setFormValues((state) => ({
-      ...state,
-      [e.target.name]: e.target.checked,
-    }));
   };
 
   return (
     <>
       <h1>Controlled Form</h1>
 
-      <form>
+      <form ref={formRef} onSubmit={submitHandler}> 
         <div>
           <label htmlFor="username">Username</label>
           <input
@@ -77,7 +87,12 @@ export default function ControlledForm() {
 
         <div>
           <label htmlFor="gender">Gender</label>
-          <select name="gender" id="gender" onChange={changeHandler} value={formValues.gender}>
+          <select
+            name="gender"
+            id="gender"
+            onChange={changeHandler}
+            value={formValues.gender}
+          >
             <option value="m">M</option>
             <option value="f">F</option>
           </select>
@@ -91,7 +106,7 @@ export default function ControlledForm() {
             name="swimming"
             id="swimming"
             checked={formValues.swimming}
-            onChange={onCheckboChange}
+            onChange={changeHandler}
           />
           <label htmlFor="running">Running</label>
           <input
@@ -99,7 +114,7 @@ export default function ControlledForm() {
             name="running"
             id="running"
             checked={formValues.running}
-            onChange={onCheckboChange}
+            onChange={changeHandler}
           />
           <label htmlFor="shopping">Shopping</label>
           <input
@@ -107,17 +122,13 @@ export default function ControlledForm() {
             name="shopping"
             id="shopping"
             checked={formValues.shopping}
-            onChange={onCheckboChange}
+            onChange={changeHandler}
           />
         </div>
 
         <div>
-          <button type="button" onClick={submitHandler}>
-            Register
-          </button>
-          <button type="button" onClick={resetFormHandler}>
-            Reset
-          </button>
+          <button type="submit"> Register </button>
+          <button type="button" onClick={resetFormHandler}> Reset </button>
         </div>
       </form>
     </>
