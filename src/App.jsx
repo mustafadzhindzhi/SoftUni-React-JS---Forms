@@ -1,6 +1,5 @@
 import './App.css'
-import ControlledForm from './components/ConrollerForm.jsx'
-// import UncontrolledForm from './components/UncontrolledForm.jsx'
+import ControlledForm from './components/ConrollerForm.jsx'// import UncontrolledForm from './components/UncontrolledForm.jsx'
 
 function App() {
 

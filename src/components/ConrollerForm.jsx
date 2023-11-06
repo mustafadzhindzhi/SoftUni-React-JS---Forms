@@ -1,34 +1,40 @@
 import { useState } from "react";
 
-export default function ControlledForm() {
-  const [userNameValue, setUserNameValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
-  const [ageValue, setAgeValue] = useState("");
+const formInitialState = {
+  username: "",
+  password: "",
+  age: "",
+  gender: "",
+  swimming: false,
+  shopping: false,
+  running: false,
+};
 
-  const userNameChangeHandler = (e) => {
-    setUserNameValue(e.target.value);
+export default function ControlledForm() {
+  const [formValues, setFormValues] = useState(formInitialState);
+
+  const changeHandler = (e) => {
+    setFormValues((state) => ({
+      ...state,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const resetFormHandler = () => {
-    setUserNameValue("");
-    setPasswordValue("");
-    setAgeValue("");
-  };
-
-  const passwordChangeHandler = (e) => {
-    setPasswordValue(e.target.value);
-  };
-
-  const ageChangeHandler = (e) => {
-    setAgeValue(Number(e.target.value));
+    setFormValues(formInitialState);
   };
 
   const submitHandler = () => {
-    console.log(userNameValue);
-    console.log(passwordValue);
-    console.log(ageValue);
+    console.log(formValues);
 
     resetFormHandler();
+  };
+
+  const onCheckboChange = (e) => {
+    setFormValues((state) => ({
+      ...state,
+      [e.target.name]: e.target.checked,
+    }));
   };
 
   return (
@@ -42,8 +48,8 @@ export default function ControlledForm() {
             type="text"
             name="username"
             id="username"
-            value={userNameValue}
-            onChange={userNameChangeHandler}
+            value={formValues.username}
+            onChange={changeHandler}
           />
         </div>
 
@@ -53,8 +59,8 @@ export default function ControlledForm() {
             type="password"
             name="password"
             id="password"
-            value={passwordValue}
-            onChange={passwordChangeHandler}
+            value={formValues.password}
+            onChange={changeHandler}
           />
         </div>
 
@@ -64,8 +70,44 @@ export default function ControlledForm() {
             type="number"
             name="age"
             id="age"
-            value={ageValue}
-            onChange={ageChangeHandler}
+            value={formValues.age}
+            onChange={changeHandler}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="gender">Gender</label>
+          <select name="gender" id="gender" onChange={changeHandler} value={formValues.gender}>
+            <option value="m">M</option>
+            <option value="f">F</option>
+          </select>
+        </div>
+
+        <div>
+          <h3>Hobbies</h3>
+          <label htmlFor="swimming">Swimming</label>
+          <input
+            type="checkbox"
+            name="swimming"
+            id="swimming"
+            checked={formValues.swimming}
+            onChange={onCheckboChange}
+          />
+          <label htmlFor="running">Running</label>
+          <input
+            type="checkbox"
+            name="running"
+            id="running"
+            checked={formValues.running}
+            onChange={onCheckboChange}
+          />
+          <label htmlFor="shopping">Shopping</label>
+          <input
+            type="checkbox"
+            name="shopping"
+            id="shopping"
+            checked={formValues.shopping}
+            onChange={onCheckboChange}
           />
         </div>
 
