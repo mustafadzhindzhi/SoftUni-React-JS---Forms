@@ -1,23 +1,23 @@
-import { useRef } from 'react'
-import './App.css'
-import ControlledForm from './components/ConrollerForm.jsx'// import UncontrolledForm from './components/UncontrolledForm.jsx'
+import ControlledForm from "./components/ConrollerFormRaw.jsx";
+import "./App.css";
+import { useRef } from "react";
+
 
 function App() {
   const formRef = useRef();
 
   return (
     <>
-      <ControlledForm fromRef={formRef}/>
+      <ControlledForm formRef={formRef} />
 
-      <button 
-      type="button" 
-      onClick={(e)=> {
-        e.preventDefault();
-        formRef.current.submit()}
-      } 
-      >Submit</button>
+      <button
+        type="button"
+        onClick={() => formRef.current.submit()}
+      >
+        Submit
+      </button>
     </>
   )
 }
 
-export default App
+export default App;
