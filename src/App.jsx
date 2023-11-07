@@ -1,7 +1,6 @@
-import ControlledForm from "./components/ConrollerFormRaw.jsx";
-import "./App.css";
-import { useRef } from "react";
-
+import ControlledForm from './components/ConrolledForm.jsx';
+import './App.css'
+import { useRef } from 'react';
 
 function App() {
   const formRef = useRef();
@@ -12,7 +11,7 @@ function App() {
 
       <button
         type="button"
-        onClick={() => formRef.current.submit()}
+        onClick={() => formRef.current.requestSubmit()}
       >
         Submit
       </button>
@@ -20,4 +19,4 @@ function App() {
   )
 }
 
-export default App;
+export default App

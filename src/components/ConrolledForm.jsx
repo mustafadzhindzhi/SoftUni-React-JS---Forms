@@ -62,22 +62,29 @@ export default function ControlledForm({
 
     const submitHandler = (e) => {
         e.preventDefault();
+        ageValidator();
+
+        if (Object.values(errors).some(x => x)) {
+            return;
+        }    
+
         console.log(formValues);
         resetFormHandler();
     };
 
     const ageValidator = () => {
-        if (formValues.age < 0 || formValues.age > 120) {
-            setErrors(state => ({
+        const ageValue = formValues.age;
+        if (ageValue < 0 || ageValue > 120) {
+            setErrors((state) => ({
                 ...state,
                 age: 'Age should be between 0 and 120',
             }));
         } else {
             if (errors.age) {
-                setErrors(state => ({ ...state, age: '' }));
+                setErrors((state) => ({ ...state, age: '' }));
             }
         }
-    }
+    };
 
     return (
         <>
